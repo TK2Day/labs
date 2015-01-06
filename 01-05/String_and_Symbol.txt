@@ -1,0 +1,25 @@
+Strings
+.chop -> new_str) returns a new string with the last character removed.
+if the string ends in \r\n both characters are removed instead of
+just the last character. example: "Hello".chop == "Hell"
+
+.dump -> new_str) returns a new version of your string with all non-printing
+replaced by \nnn notation and all special characters expired. Non-printable charcters
+are defined as such: based on the English alphabet, it encodes 128 specified
+characters into 7-bit binary intergers.
+
+Symbols
+sym == obj -> True or False
+Equality if the symbol and the object are the exact same then returns true.
+This is different from the String method since the Symbol and the object must be
+the same and not just similar.
+
+to_proc
+returns a Proc object which respond to the given method by sym.
+
+Enumerable Class
+collect_concat{|obj|block}-> array
+collect_concast -> an_enumerator
+Returns with a new array with concatenated results of running block once for
+every element in enum. You would probably use this for tax forms maybe, or even finding
+the percentages of return investment over the years.

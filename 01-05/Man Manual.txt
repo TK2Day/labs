@@ -1,0 +1,8 @@
+I read the Manual of the Manual, because I thought it wouldn't pull anything up.
+Manual displays the manual of said function and a brief description of and examples
+of what it does. Manual will also interpret files if the name contains a flash. Manual
+also shows the commands that the command will execute and will show the key that is binded
+to it. Examples: Man -h will give you a help message and exit the prompt. man -a
+will look for all matching entries in the manual. Man can also define and attempt to
+save Cat and HTML pages, Cat pages must be formatted a certain way to be accessed, and
+HTML pages must be saved in a directory that ends with ".html".
