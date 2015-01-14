@@ -8,7 +8,7 @@
 
 
 def title
- puts "clear"
+ puts `clear`
 
  puts "_____  _   __         _____   __    __         _____  ___   ____
  | |  | | / /`   ___   | |   / /\\  / /`   ___   | |  / / \\ | |_
@@ -35,65 +35,40 @@ def choose_character
   puts "\nYou picked #{result}\n"
 end
 
- def show_board
-   board = [/^[0-9]$/]
-    "  #{board[0]} | #{board[1]} | #{board[2]}
-       -------------
-       #{board[3]} | #{board[4]} | #{board[5]}
-       -------------
-       #{board[6]} | #{board[7]} | #{board[8]}
+ def show_board(board)
+   puts "
+          #{board[0]} | #{board[1]} | #{board[2]}
+       ---------------
+          #{board[3]} | #{board[4]} | #{board[5]}
+       ---------------
+          #{board[6]} | #{board[7]} | #{board[8]}
        "
 
  end
 
 
 
-
-
-
-# def board
-#   puts "
-#
-#            |      |
-#         1  |   2  |  3
-#       _____|______|_____
-#            |      |
-#         4  |   5  |  6
-#       _____|______|_____
-#            |      |
-#         7  |   8  |  9
-#            |      |
-#
-#   "
-# end
-
-
-
-def set_board
- #how the hell am i going to draw?
- #figure that shit out
-
-
-end
-
-
-
-
 def winner?(board)
+  puts "win?"
  WINS.any? do |i, j, k|
-  #  w.map { |x| board[x] }.uniq,length == 1
-   board[i] == board[j] && board[j] == board[k]
+  # w.map { |x| board[x] }.uniq,length == 1
+  if board[i] == board[j] && board[j] == board[k]
    return board[i]
+ end
  end
 end
 
 def finished?(board)
-  winner?(board) || board.all?{ |x| x.is_a? String }
+ puts "fin?"
+  winner?(board) || board.all?{ |x| x.is_a?(String) }
 end
+
 
 
 def game_over(board)
  #check for win condintions
+ puts `clear`
+ title
  puts "Would you like to play again? y/n?"
   input = STDIN.getch.downcase
   if input == "y"
@@ -104,11 +79,11 @@ def game_over(board)
   end
 end
 
-def take_turn(board)
+def take_turn(board, player)
   show_board(board)
   puts "player #{player}: Please choose a space ..."
   result = gets.chomp
-  available = board.select { |x| x.is_a? == Fixnum }
+  available = board.select { |x| x.is_a?(Fixnum) }
   until result =~ /^[0-9]$/ && available.include?(result.to_i)
     puts "You have to choose an available square!"
     result = gets.chomp
@@ -119,17 +94,20 @@ end
 
 
 def play_vs(board, player1, player2)
-turn_count = 1
-until finished?(board)
+ show_board(board)
+ turn_count = 1
+ until finished?(board)
+   puts "swag"
   player = turn_count.odd? ? player1 : player2
   square = take_turn(board, player)
   board[square] = player
   turn_count += 1
-end
+ end
 end
 
 
 def play_vsai(board, player1, player2)
+  show_board(board)
   turn_count = 1
   until finished?(board)
     player = turn_count.odd? ? player1 : player2
@@ -142,31 +120,31 @@ def play_vsai(board, player1, player2)
 end
 
 
-def select_mode(play_vs, play_vsai)
+def select_mode(board, player1, player2)
    title
-   puts "Select game mode! "
+   puts "\n\nSelect game mode! \n\n"
    puts "Press Q for Multiplayer, Press E for Easy mode, Or Leave with L"
     input = STDIN.getch.upcase!
 
    if input == "Q"
-     puts "You have selected Multiplayer! Grab a buddy or play alone. :c"
+     puts "\n\nYou have selected Multiplayer! Grab a buddy or play alone. :c\n\n"
      #ugh meme referance #1
-     play_vs
+     play_vs(board, player1, player2)
    elsif input == "E"
      puts "You have selected VS Ai: Easy mode aka: ezpz lemon squeeze "
-     play_vsai
+     play_vsai(board, player1, player2)
   #  elsif input == "N"
   #    pust "AI: Nightmare mode Activated. What have yo-. RESISTANCE IS FUTILE. EXTERMINATE!"
   #    #heh doctor who.
   #    play_vsai
    elsif input == "L"
-    puts "exits"
-
+     puts "Goodbye!"
+    puts `exit`
    elsif input.upcase != "Q" || input.upcase != "N" || input.upcase != "E" || input.upcase != "L"
     puts "Not a vaild Character please try again, silly."
    input
+
   end
-    puts "Goodbye!"
  end
 
 
@@ -176,14 +154,8 @@ def tic_tac_toe(board)
   player1 = choose_character
   player2 = player1 == 'X' ? 'O' : 'X'
   next_turn = player2
-  select_mode
-  until finished?(board)
-    player = turn_count.even? ? player1 : player2
-    square = take_turn(board, player)
-    board[square-1] = player
-    turn_count += 1
-  end
-  game_over(board)
+  select_mode(board, player1, player2)
+
 end
 
 tic_tac_toe(board)
